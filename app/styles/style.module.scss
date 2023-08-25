@@ -1,0 +1,6 @@
+.products {
+  @apply flex justify-between items-center flex-wrap;
+}
+.product {
+  @apply flex items-center justify-center flex-col;
+}
