@@ -2,19 +2,20 @@ import { createSlice } from "@reduxjs/toolkit";
 import { IProducts } from "@/app/interface/data.interface";
 
 const initialState: any = [];
+
 export const CartItems = createSlice({
   name: "CartItems",
   initialState,
   reducers: {
     addToCart: (state, { payload: product }) => {
-      const isExists = state.some((p: IProducts) => product.id === p.id);
+      const { quantity, id, title, price, image } = product;
+      const isExists = state.find((p: IProducts) => product.id === p.id);
       if (isExists) {
-        return;
-      }
-      state.push(product);
+        isExists.quantity += quantity;
+      } else state.push({ id, title, price, quantity, image });
     },
     deleteFromCart: (state, { payload: product }) => {
-      state = state.filter((p: IProducts) => product.id !== p.id);
+      return state.filter((cartItem: IProducts) => cartItem.id != product.id);
     },
   },
 });

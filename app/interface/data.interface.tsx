@@ -5,6 +5,7 @@ interface IProducts {
   descriptiom: string;
   category: string;
   image: string;
+  quantity: number;
   rating: {
     rate: number;
     count: number;

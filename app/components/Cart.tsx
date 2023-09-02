@@ -2,9 +2,9 @@ import { FC, useState } from "react";
 // Redux
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { RootState } from "../store/store";
-import { actions } from "../store/cart/cart.slice";
+import { actions as cartItemAction } from "../store/cart/cart.slice";
 import { useDispatch } from "react-redux";
-import { actions as handleClose } from "../store/cart/togleHandler.slice";
+import { actions as handleCloseAction } from "../store/cart/togleHandler.slice";
 //interface
 import { IProducts } from "../interface/data.interface";
 // next Image
@@ -12,11 +12,20 @@ import Image from "next/image";
 // react icons
 import { BsTrash } from "react-icons/bs";
 import { AiFillCloseCircle } from "react-icons/ai";
+import { current } from "@reduxjs/toolkit";
 
 export const Cart: FC = () => {
   const dispatch = useDispatch();
   const Items = useSelector((state: RootState) => state.CartItems);
   const isOpen = useSelector((state: any) => state.toggleHandler);
+  const prices = Items.map(
+    (product: IProducts) => parseFloat(product.price) * product.quantity
+  );
+  const totalPrice = prices.reduce(
+    (accumulator: number, currentValue: number) => accumulator + currentValue,
+    0
+  );
+
   return (
     <div
       className={`w-full bg-white fixed top-0 h-full 
@@ -25,13 +34,13 @@ export const Cart: FC = () => {
     }`}>
       <button
         className="flex justify-end w-full"
-        onClick={() => dispatch(handleClose.closeHandler())}>
+        onClick={() => dispatch(handleCloseAction.closeHandler())}>
         <AiFillCloseCircle />
       </button>
       {Items
         ? Items.map((product: IProducts) => {
             return (
-              <div className="flex items-center  w-full">
+              <div className="flex items-center  w-full" key={product.id}>
                 <Image
                   alt="product image"
                   src={product.image}
@@ -42,9 +51,13 @@ export const Cart: FC = () => {
                   <div className="flex justify-between">
                     <h3>{product.title}</h3>
                     <p>${product.price}</p>
+                    <p>quantity: {product.quantity}</p>
                   </div>
                   <div>
-                    <button onClick={() => actions.deleteFromCart(product)}>
+                    <button
+                      onClick={() =>
+                        dispatch(cartItemAction.deleteFromCart(product))
+                      }>
                       <BsTrash />
                     </button>
                   </div>
@@ -53,6 +66,7 @@ export const Cart: FC = () => {
             );
           })
         : null}
+      <p>total price: ${totalPrice.toFixed(2)}</p>
     </div>
   );
 };

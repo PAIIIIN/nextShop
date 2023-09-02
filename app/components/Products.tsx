@@ -7,12 +7,21 @@ import { useDispatch } from "react-redux";
 // style
 import style from "../styles/style.module.scss";
 import { actions } from "../store/cart/cart.slice";
+import { title } from "process";
 
 export const Products: FC = () => {
   const queryClient = useQueryClient();
   const { data } = useQuery(["products"], getProducts);
   const dispatch = useDispatch();
-
+  const handleAddToCart = (
+    id: number,
+    title: string,
+    price: string,
+    quantity: number,
+    image: string
+  ) => {
+    dispatch(actions.addToCart({ id, quantity, title, price, image }));
+  };
   return (
     <div>
       {data ? (
@@ -36,7 +45,16 @@ export const Products: FC = () => {
                   />
                   <h2>{product.title}</h2>
                   <p>${product.price}</p>
-                  <button onClick={() => dispatch(actions.addToCart(product))}>
+                  <button
+                    onClick={() =>
+                      handleAddToCart(
+                        product.id,
+                        product.title,
+                        product.price,
+                        1,
+                        product.image
+                      )
+                    }>
                     Add to Cart
                   </button>
                 </div>
