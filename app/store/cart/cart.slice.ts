@@ -15,7 +15,19 @@ export const CartItems = createSlice({
       } else state.push({ id, title, price, quantity, image });
     },
     deleteFromCart: (state, { payload: product }) => {
-      return state.filter((cartItem: IProducts) => cartItem.id != product.id);
+      return state.filter((cartItem: IProducts) => cartItem.id !== product.id);
+    },
+    increaseQuantity: (state, { payload: product }) => {
+      const isExists = state.find((p: IProducts) => product.id === p.id);
+      isExists.quantity++;
+    },
+    decreaseQuantity: (state, { payload: product }) => {
+      const isExists = state.find((p: IProducts) => product.id === p.id);
+      if (isExists.quantity < 2) {
+        return state.filter(
+          (cartItem: IProducts) => cartItem.id !== product.id
+        );
+      } else isExists.quantity--;
     },
   },
 });

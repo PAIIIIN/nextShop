@@ -51,7 +51,21 @@ export const Cart: FC = () => {
                   <div className="flex justify-between">
                     <h3>{product.title}</h3>
                     <p>${product.price}</p>
-                    <p>quantity: {product.quantity}</p>
+                    <div>
+                      <p>quantity: {product.quantity}</p>
+                      <button
+                        onClick={() =>
+                          dispatch(cartItemAction.increaseQuantity(product))
+                        }>
+                        +
+                      </button>
+                      <button
+                        onClick={() =>
+                          dispatch(cartItemAction.decreaseQuantity(product))
+                        }>
+                        -
+                      </button>
+                    </div>
                   </div>
                   <div>
                     <button
@@ -66,7 +80,9 @@ export const Cart: FC = () => {
             );
           })
         : null}
-      <p>total price: ${totalPrice.toFixed(2)}</p>
+      <div>
+        {totalPrice ? <p>total price: ${totalPrice.toFixed(2)}</p> : null}
+      </div>
     </div>
   );
 };
