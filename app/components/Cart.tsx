@@ -11,8 +11,8 @@ import { IProducts } from "../interface/data.interface";
 import Image from "next/image";
 // react icons
 import { BsTrash } from "react-icons/bs";
+import { FaArrowRight } from "react-icons/fa";
 import { AiFillCloseCircle } from "react-icons/ai";
-import { current } from "@reduxjs/toolkit";
 
 export const Cart: FC = () => {
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ export const Cart: FC = () => {
       <button
         className="flex justify-end w-full"
         onClick={() => dispatch(handleCloseAction.closeHandler())}>
-        <AiFillCloseCircle />
+        <FaArrowRight />
       </button>
       {Items
         ? Items.map((product: IProducts) => {
@@ -72,7 +72,7 @@ export const Cart: FC = () => {
                       onClick={() =>
                         dispatch(cartItemAction.deleteFromCart(product))
                       }>
-                      <BsTrash />
+                      <AiFillCloseCircle />
                     </button>
                   </div>
                 </div>
@@ -81,7 +81,14 @@ export const Cart: FC = () => {
           })
         : null}
       <div>
-        {totalPrice ? <p>total price: ${totalPrice.toFixed(2)}</p> : null}
+        {totalPrice ? (
+          <div>
+            <p>total price: ${totalPrice.toFixed(2)}</p>
+            <button onClick={() => dispatch(cartItemAction.clearCart())}>
+              <BsTrash />
+            </button>
+          </div>
+        ) : null}
       </div>
     </div>
   );

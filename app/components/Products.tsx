@@ -4,10 +4,10 @@ import { useQuery, useQueryClient } from "react-query";
 import { IProducts } from "../interface/data.interface";
 import { FC } from "react";
 import { useDispatch } from "react-redux";
-// style
-import style from "../styles/style.module.scss";
+//redux
 import { actions } from "../store/cart/cart.slice";
-import { title } from "process";
+//react-icons
+import { AiFillEye } from "react-icons/ai";
 
 export const Products: FC = () => {
   const queryClient = useQueryClient();
@@ -23,7 +23,7 @@ export const Products: FC = () => {
     dispatch(actions.addToCart({ id, quantity, title, price, image }));
   };
   return (
-    <div>
+    <div className="">
       {data ? (
         <div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-[30px]
@@ -36,13 +36,18 @@ export const Products: FC = () => {
             )
             .map((product: IProducts) => {
               return (
-                <div className={style.product} key={product.id}>
-                  <Image
-                    src={product.image}
-                    alt="product image"
-                    width={120}
-                    height={100}
-                  />
+                <div
+                  className="flex justify-center items-center flex-col border-[1px] border-black"
+                  key={product.id}>
+                  <div className="flex justify-between ">
+                    <Image
+                      src={product.image}
+                      alt="product image"
+                      width={120}
+                      height={100}
+                    />
+                    <AiFillEye />
+                  </div>
                   <h2>{product.title}</h2>
                   <p>${product.price}</p>
                   <button
