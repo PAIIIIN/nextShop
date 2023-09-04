@@ -4,15 +4,15 @@ import { useQuery, useQueryClient } from "react-query";
 import { IProducts } from "../interface/data.interface";
 import { FC } from "react";
 import { useDispatch } from "react-redux";
-//redux
 import { actions } from "../store/cart/cart.slice";
-//react-icons
 import { AiFillEye } from "react-icons/ai";
+import { AiOutlinePlus } from "react-icons/ai";
 
 export const Products: FC = () => {
   const queryClient = useQueryClient();
   const { data } = useQuery(["products"], getProducts);
   const dispatch = useDispatch();
+
   const handleAddToCart = (
     id: number,
     title: string,
@@ -22,12 +22,11 @@ export const Products: FC = () => {
   ) => {
     dispatch(actions.addToCart({ id, quantity, title, price, image }));
   };
+
   return (
-    <div className="">
+    <div className="container mx-auto mt-8 p-4">
       {data ? (
-        <div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-[30px]
-        max-w-sm mx-auto md:max-w-none md:mx-0">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 max-w-screen-xl mx-auto">
           {data
             .filter(
               (product: IProducts) =>
@@ -37,37 +36,47 @@ export const Products: FC = () => {
             .map((product: IProducts) => {
               return (
                 <div
-                  className="flex justify-center items-center flex-col border-[1px] border-black"
-                  key={product.id}>
-                  <div className="flex justify-between ">
+                  key={product.id}
+                  className="bg-white border border-gray-200 rounded-lg p-4 shadow-md hover:shadow-lg transform hover:-translate-y-1 hover:scale-105 transition-transform duration-300 ease-in-out">
+                  <div className="relative h-40 w-40 mx-auto">
                     <Image
                       src={product.image}
                       alt="product image"
-                      width={120}
-                      height={100}
+                      layout="fill"
+                      objectFit="cover"
+                      className="rounded-md"
                     />
-                    <AiFillEye />
                   </div>
-                  <h2>{product.title}</h2>
-                  <p>${product.price}</p>
-                  <button
-                    onClick={() =>
-                      handleAddToCart(
-                        product.id,
-                        product.title,
-                        product.price,
-                        1,
-                        product.image
-                      )
-                    }>
-                    Add to Cart
-                  </button>
+                  <div className="mt-4 flex justify-between items-center">
+                    <h2 className="text-lg font-semibold text-gray-800">
+                      {product.title}
+                    </h2>
+                    <div className="flex items-center space-x-2">
+                      <AiFillEye className="text-gray-600 text-xl" />
+                      <button
+                        onClick={() =>
+                          handleAddToCart(
+                            product.id,
+                            product.title,
+                            product.price,
+                            1,
+                            product.image
+                          )
+                        }
+                        className="bg-blue-500 text-white px-3 py-1 rounded-lg">
+                        <AiOutlinePlus className="text-xl" />
+                      </button>
+                    </div>
+                  </div>
+                  <p className="mt-2 text-gray-700">${product.price}</p>
                 </div>
               );
             })}
         </div>
       ) : (
-        <h1>Data Not Found</h1>
+        <h1 className="text-2xl font-semibold text-center mt-8">
+          Data Not Found
+        </h1>
       )}
     </div>
   );
