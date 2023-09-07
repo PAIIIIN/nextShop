@@ -20,6 +20,9 @@ export const Products: FC = () => {
   const dispatch = useDispatch();
   const [selectedCategory, setSelectedCategory] =
     useState<ICategoryOption | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<IProducts | null>(
+    null
+  );
 
   const categoryOptions: ICategoryOption[] = [
     { value: "men's clothing", label: "Men's Clothing" },
@@ -34,6 +37,14 @@ export const Products: FC = () => {
     image: string
   ) => {
     dispatch(actions.addToCart({ id, quantity, title, price, image }));
+  };
+
+  const handleShowDetail = (product: IProducts) => {
+    setSelectedProduct(product);
+  };
+
+  const handleCloseDetail = () => {
+    setSelectedProduct(null);
   };
 
   return (
@@ -81,7 +92,9 @@ export const Products: FC = () => {
                       {product.title}
                     </h2>
                     <div className="flex items-center space-x-2">
-                      <AiFillEye className="text-gray-600 text-xl" />
+                      <button onClick={() => handleShowDetail(product)}>
+                        <AiFillEye className="text-gray-600 text-xl" />
+                      </button>
                       <button
                         onClick={() =>
                           handleAddToCart(
@@ -106,6 +119,49 @@ export const Products: FC = () => {
         <h1 className="text-2xl font-semibold text-center mt-8">
           Loading Data...
         </h1>
+      )}
+      {selectedProduct && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70">
+          <div className="bg-opacity-40 backdrop-blur-lg backdrop-filter absolute inset-0 flex items-center justify-center">
+            <div className="bg-white p-8 rounded-lg max-w-[800px]">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="relative h-80 w-80 mx-auto">
+                  <Image
+                    src={selectedProduct.image}
+                    alt="product image"
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-md"
+                  />
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold text-gray-800">
+                    {selectedProduct.title}
+                  </h2>
+                  <p className="text-gray-700">${selectedProduct.price}</p>
+                  <button
+                    onClick={() =>
+                      handleAddToCart(
+                        selectedProduct.id,
+                        selectedProduct.title,
+                        selectedProduct.price,
+                        1,
+                        selectedProduct.image
+                      )
+                    }
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg mt-4">
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+              <button
+                onClick={handleCloseDetail}
+                className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg mt-4">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
