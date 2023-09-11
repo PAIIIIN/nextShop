@@ -1,7 +1,3 @@
-Конечно, вот пример README-файла для вашего проекта e-commerce, разработанного с использованием Next.js, TypeScript и Redux Toolkit:
-
----
-
 # E-commerce приложение на Next.js с TypeScript и Redux Toolkit
 
 Это e-commerce приложение разработано с использованием Next.js, TypeScript и Redux Toolkit. Оно предоставляет мощные инструменты для создания и управления интернет-магазином.
