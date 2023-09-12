@@ -6,7 +6,7 @@ import { BsTwitter } from "react-icons/bs";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-[#F5E6E0] py-10 text-gray-800">
+    <footer className="bg-[#F2ebe2] py-10 text-gray-800">
       <div className="container mx-auto flex flex-col items-center space-y-4">
         <ul className="flex items-center space-x-4">
           <li>

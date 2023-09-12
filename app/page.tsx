@@ -12,6 +12,8 @@ import Layout from "./layout/Layout";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 
+import "./styles/style.scss";
+
 const queryClient = new QueryClient();
 
 export default function Home() {
@@ -21,6 +23,14 @@ export default function Home() {
         <QueryClientProvider client={queryClient}>
           <main className="py-16">
             <div className="mx-auto">
+              <div className="hero flex">
+                <div className="w-[50%] bg-[#F2ebe2] flex text-center items-center justify-center text-6xl">
+                  <a href="#products">
+                    Level Up Your Style <br /> With Us.
+                  </a>
+                </div>
+                <div className="hero-image"></div>
+              </div>
               <Products />
               <Cart />
             </div>

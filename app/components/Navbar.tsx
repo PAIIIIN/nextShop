@@ -11,7 +11,7 @@ export const Navbar: FC = () => {
   const dispatch = useDispatch();
 
   return (
-    <header className="bg-[#F5E6E0] fixed w-full z-10 shadow-md p-4">
+    <header className="bg-[#F2ebe2] fixed w-full z-10 shadow-md p-4">
       <nav className="container mx-auto flex justify-between items-center">
         <Link
           href="/"

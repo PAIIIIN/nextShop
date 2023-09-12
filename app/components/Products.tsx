@@ -48,7 +48,7 @@ export const Products: FC = () => {
   };
 
   return (
-    <div className="container mx-auto mt-8 p-4">
+    <div id="products" className="container mx-auto mt-8 p-4">
       <div className="mb-4">
         <label htmlFor="category" className="font-semibold text-gray-600">
           Select Category:
@@ -62,7 +62,7 @@ export const Products: FC = () => {
         />
       </div>
       {data ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 max-w-screen-xl mx-auto">
+        <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 max-w-screen-xl mx-auto">
           {data
             .filter((product: IProducts) => {
               if (selectedCategory) {
