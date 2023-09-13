@@ -1,5 +1,7 @@
 # E-commerce приложение на Next.js с TypeScript и Redux Toolkit
 
+live demo: https://nextcommerce11.netlify.app
+
 Это e-commerce приложение разработано с использованием Next.js, TypeScript и Redux Toolkit. Оно предоставляет мощные инструменты для создания и управления интернет-магазином.
 
 ## Установка
